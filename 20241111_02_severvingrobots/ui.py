@@ -9,14 +9,13 @@ class windows:
         self.frame = Frame(self.root)
         self.frame.create_frame()
         
-        # 테이블 버튼
-        self.tablebtn = TableBtn(self.frame.frame1)
-        self.tablebtn.create_table_button()
-        
         # 엔트리 상자
         self.entrybox = EntryBox(self.frame.frame2)
         self.entrybox.create_entry_box()
         
+        # 테이블 버튼
+        self.tablebtn = TableBtn(self.frame.frame1, self.entrybox)  # EntryBox 객체를 TableBtn에 전달
+        self.tablebtn.create_table_button()
         
     def run(self):
         self.root.mainloop()
@@ -39,9 +38,9 @@ class Frame:
         self.frame3.pack()
 
 class TableBtn:
-    def __init__(self, frame1):
+    def __init__(self, frame1, entrybox):
         self.frame1 = frame1
-        self.table = None
+        self.entrybox = entrybox
         
     def create_table_button(self):
         for i in range(1, 11):
@@ -50,17 +49,20 @@ class TableBtn:
             row = (i - 1) // 5
             column = (i - 1) % 5
             table.grid(row=row, column=column, padx=5, pady=5)
+            
+    def on_table_call(self, i):
+        # EntryBox에 호출된 테이블 번호 출력
+        self.entrybox.update_entry(f"{i}번 호출 됨")
 
 class EntryBox:
     def __init__(self, frame2):
         self.frame2 = frame2
     
     def create_entry_box(self):
-        self.entry =  tk.Entry(self.frame2)
+        self.entry = tk.Entry(self.frame2)
         self.entry.pack()
 
-    def on_table_call(self, table):
-        self.entry.delete(0, tk.END)  # 기존 텍스트 삭제
-        self.entry.insert(0, f"{table}번 테이블 호출됨")  # Entry에 새 텍스트 삽입
-    
-
+    def update_entry(self, text):
+        # Entry 위젯에 텍스트를 출력
+        self.entry.delete(0, tk.END)  # 기존 텍스트를 지운 후
+        self.entry.insert(0, text)    # 새로운 텍스트 삽입
