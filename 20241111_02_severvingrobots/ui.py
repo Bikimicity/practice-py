@@ -1,6 +1,7 @@
 import tkinter as tk
+from animation import Animation
 
-class windows:
+class Windows:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("서빙로봇 시뮬레이터")
@@ -16,6 +17,9 @@ class windows:
         # 테이블 버튼
         self.tablebtn = TableBtn(self.frame.frame1, self.entrybox)  # EntryBox 객체를 TableBtn에 전달
         self.tablebtn.create_table_button()
+        
+        # 애니메이션 추가
+        self.animation = Animation(self.frame.frame3)
         
     def run(self):
         self.root.mainloop()

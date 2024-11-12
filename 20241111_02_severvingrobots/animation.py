@@ -1,7 +1,12 @@
-import time
+import tkinter as tk
+from PIL import Image, ImageTk
+from objects import *
 
-def move_robot(table_number):
-    # 단순 이동 애니메이션
-    print(f"로봇이 {table_number}번 테이블로 이동 중...")
-    time.sleep(1)
-    print(f"{table_number}번 테이블에 도착했습니다.")
+class Animation:
+    def __init__(self, frame3):
+        self.frame3 = frame3
+        self.canvas = tk.Canvas(self.frame3, width=600, height=600)
+        self.canvas.pack()
+        
+        self.robot = Robot(self.canvas)
+        self.tablebutton = Bell(self.canvas, self.robot)
