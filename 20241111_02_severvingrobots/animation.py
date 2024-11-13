@@ -10,3 +10,7 @@ class Animation:
         self.canvas.pack(pady=20)
         
         self.robot = Robot(self.canvas)
+        self.bell = Bell(self.canvas)
+
+        self.bells = self.bell.create_bells()
+        self.bell.arrange_bells(self.bells)
