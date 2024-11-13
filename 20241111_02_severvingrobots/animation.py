@@ -10,7 +10,11 @@ class Animation:
         self.canvas.pack(pady=20)
         
         self.robot = Robot(self.canvas)
-        self.bell = Bell(self.canvas)
 
-        self.bells = self.bell.create_bells()
-        self.bell.arrange_bells(self.bells)
+        self.bells = Bell.create_bells(self.canvas)
+        self.bell_positions = Bell.arrange_bells(self.bells)
+
+        # 저장된 벨 위치 정보 출력
+        print("벨 위치 정보:", self.bell_positions)
+        
+        

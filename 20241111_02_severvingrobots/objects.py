@@ -10,30 +10,35 @@ class Robot:
         self.canvas.create_image(400, 270, anchor="center", image=self.robot_image)
 
 class Bell:
-    def __init__(self, canvas):
+    def __init__(self, canvas, bell_id):
         self.canvas = canvas
+        self.id = bell_id
         self.bells_image = Image.open("bell.png")
         self.bells_image = self.bells_image.resize((60, 60))
         self.bell_image = ImageTk.PhotoImage(self.bells_image)
         self.bell = self.canvas.create_image(50, 50, anchor="center", image=self.bell_image)
         
-    def create_bells(self):
-        self.bells = [Bell(self.canvas) for _ in range(10)]
-        return self.bells
+    @classmethod
+    def create_bells(cls, canvas):
+        # 10개의 벨 객체를 생성하고 리스트로 반환
+        return [cls(canvas, i+1) for i in range(10)]
         
-    def arrange_bells(self, bells):
-        # 벨 객체들의 위치 조정
+    @staticmethod
+    def arrange_bells(bells):
+        bell_positions = {}
+        
         for i, bell in enumerate(bells):
-            # 위쪽 5개 벨 위치 (y=50)
             if i < 5:
-                x = 50 + i * 170  # 간격을 120으로 설정
+                x = 50 + i * 170
                 y = 50
-            # 아래쪽 5개 벨 위치 (y=550)
             else:
-                x = 50 + (i - 5) * 170  # 간격을 120으로 설정
+                x = 50 + (i - 5) * 170
                 y = 550
-            bell.set_position(x, y)  # 위치 설정 메서드 호출
             
+            bell.set_position(x, y)
+            bell_positions[bell.id] = {"x": x, "y": y}
+        
+        return bell_positions
+    
     def set_position(self, x, y):
-        # 이미지를 지정된 (x, y) 위치로 이동
         self.canvas.coords(self.bell, x, y)
