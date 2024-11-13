@@ -5,6 +5,7 @@ class Windows:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("서빙로봇 시뮬레이터")
+        self.root.geometry("1200x800")
         
         # 전체 프레임
         self.frame = Frame(self.root)
